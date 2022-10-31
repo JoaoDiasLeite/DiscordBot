@@ -211,7 +211,7 @@ Project Link: [https://github.com/JoaoDiasLeite/DiscordBot](https://github.com/J
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/JoaoDiasLeite/DiscordBot.svg?style=for-the-badge
-[contributors-url]: https://github.com/JoaoDiasLeite/graphs/contributors
+[contributors-url]: https://github.com/JoaoDiasLeite/DiscordBot/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/JoaoDiasLeite/DiscordBot.svg?style=for-the-badge
 [forks-url]: https://github.com/JoaoDiasLeite/DiscordBot/network/members
 [stars-shield]: https://img.shields.io/github/stars/JoaoDiasLeite/DiscordBot.svg?style=for-the-badge
@@ -219,7 +219,7 @@ Project Link: [https://github.com/JoaoDiasLeite/DiscordBot](https://github.com/J
 [issues-shield]: https://img.shields.io/github/issues/JoaoDiasLeite/DiscordBot.svg?style=for-the-badge
 [issues-url]: https://github.com/JoaoDiasLeite/DiscordBot/issues
 [license-shield]: https://img.shields.io/github/license/JoaoDiasLeite/DiscordBot.svg?style=for-the-badge
-[license-url]: https://github.com/JoaoDiasLeite/DiscordBot/blob/master/LICENSE
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/linkedin_username
+<!-- [license-url]: https://github.com/JoaoDiasLeite/DiscordBot/blob/master/LICENSE
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555 
+[linkedin-url]: https://linkedin.com/in/linkedin_username -->
 [product-screenshot]: images/screenshot.png
