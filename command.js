@@ -20,7 +20,7 @@ const commands = [
   {
     name: 'gabriel',
     description: 'é Gay!',
-  },
+  }
 ];
 
 const rest = new REST({ version: '10' }).setToken('MTAzNTcxODM3MjQwODY4ODY5MA.G4UL95.SJgiK6sTeA7MQIGQsntDjB2YJXuPwLK7_Txauk');
