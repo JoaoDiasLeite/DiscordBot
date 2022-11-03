@@ -1,16 +1,22 @@
 require('dotenv').config();
 
+var token = process.env.TOKEN
+var client_id = process.env.CLIENT_ID
+
+
+console.log(token.toString());
+
 const {REST} = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { Client,  GatewayIntentBits, Collection } = require('discord.js');
-const { Player } = require("discord-player");
+const { Client, Intents, Collection } = require('discord.js');
+const { PLayer, Player } = require("discord-player");
 
 const fs = require('fs');
 const path = require('path');
 
 
 const client = new Client({
-    intents: [GatewayIntentBits.Guilds,  GatewayIntentBits.GuildMessages,  GatewayIntentBits.GuildVoiceStates]
+    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS_GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES]
 });
 
 //load all the commands
@@ -24,8 +30,8 @@ for (const file of commandsFiles)
 {
     const filePath = path.join(commandsPath, file);
     const command = require(filePath);
-console.log(command)
-    client.commands.set(command.data.name, command);
+
+    client.commands.set(command.date.name, command);
     commands.push(command.data.toJSON());
 }
 
@@ -39,10 +45,10 @@ client.player = new Player(client, {
 client.on("ready",() => {
     const guild_ids =client.guilds.cache.map(guild => guild.id);
 
-    const rest = new REST({version: "9"}).setToken(process.env.TOKEN);
+    const rest = new Rest({version: "9"}).setToken(process.env.TOKEN);
     for (const guildId of guild_ids)
     {
-        rest.put(Routes.applicationGuildCommands(process.env.CLIENT_ID, guildId),{
+        rest.put(ROutes.applicationGuildCommands(process.env.CLIENT_ID, guildId),{
             body: commands
         })
         .then(() => console.log(`Added commands to ${client.user.tag}!`))
