@@ -1,5 +1,5 @@
 const {SlashCommandBuilder} = require("@discordjs/builders");
-const { MessageEmbed } = require("@discordjs/js");
+const { EmbedBuilder } = require("discord.js");
 const { QueryType} = require("discord-player");
 
 //play search <song>
@@ -8,39 +8,39 @@ module.exports = {
     data: new SlashCommandBuilder()
         .setName("play")
         .setDescription("Plays a song.")
-        .addSubcommand(subcommand => 
-            subcommand
+        .addSubcommand(subcommand => {
+            return subcommand
                 .setName("search")
                 .setDescription("Searches for song.")
-                .addStringOption(option => 
-                    option  
+                .addStringOption(option => {
+                    return option  
                         .setName("searchterms")
                         .setDescription("search keywords")
                         .setRequired(true)
-                )
-        )
-        .addSubcommand(subcommand => 
-            subcommand
+            })
+        })
+        .addSubcommand(subcommand => {
+            return subcommand
                 .setName("playlist")
                 .setDescription("Plays playlist from YT.")
-                .addStringOption(option => 
-                    option  
+                .addStringOption(option => {
+                    return option  
                         .setName("url")
                         .setDescription("playlist url")
                         .setRequired(true)
-                )
-        )
-        .addSubcommand(subcommand => 
-            subcommand
-                .setName("Song")
+                })
+            })
+        .addSubcommand(subcommand => {
+            return subcommand
+                .setName("song")
                 .setDescription("Plays song from YT")
-                .addStringOption(option => 
-                    option  
+                .addStringOption(option => {
+                    return option  
                         .setName("url")
                         .setDescription("url of the song")
                         .setRequired(true)
-                )
-        ),
+                })
+            }),
     execute: async ({client, interaction}) => {
         if (!interaction.member.voice.channel)
         {
@@ -52,10 +52,10 @@ module.exports = {
 
         if (!queue.connection) await queue.connect(interaction.member.voice.channel)
 
-        let embed = new MessageEmbed();
+        let embed = new EmbedBuilder();
         if(interaction.options.getSubcommand() === "song")
         {
-            let url = interaction.options.getSring("url");
+            let url = interaction.options.getString("url");
 
             const result = await client.player.search(url, {
                 requestedBy: interaction.user,
@@ -79,7 +79,7 @@ module.exports = {
         }
         else if(interaction.options.getSubcommand() === "playlist")
         {
-            let url = interaction.options.getSring("url");
+            let url = interaction.options.getString("url");
 
             const result = await client.player.search(url, {
                 requestedBy: interaction.user,
@@ -103,7 +103,7 @@ module.exports = {
         }
         else if(interaction.options.getSubcommand() === "search")
         {
-            let url = interaction.options.getSring("searchterms");
+            let url = interaction.options.getString("searchterms");
 
             const result = await client.player.search(url, {
                 requestedBy: interaction.user,
