@@ -1,7 +1,7 @@
 require("dotenv").config()
 const { Client, Collection, GatewayIntentBits, MessageFlags } = require("discord.js")
 const { Player } = require("discord-player")
-const { DefaultExtractors } = require("@discord-player/extractor")
+const { DefaultExtractors, SpotifyExtractor } = require("@discord-player/extractor")
 const { YoutubeExtractor } = require("discord-player-youtubei")
 const { loadCommands } = require("./utils/commands")
 
@@ -60,7 +60,12 @@ client.on("interactionCreate", async (interaction) => {
 
 async function main() {
 	await client.player.extractors.register(YoutubeExtractor, {})
-	await client.player.extractors.loadMulti(DefaultExtractors)
+	await client.player.extractors.loadMulti(DefaultExtractors, {
+		[SpotifyExtractor.identifier]: {
+			clientId: process.env.SPOTIFY_CLIENT_ID || null,
+			clientSecret: process.env.SPOTIFY_CLIENT_SECRET || null,
+		},
+	})
 	await client.login(TOKEN)
 }
 

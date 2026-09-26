@@ -9,13 +9,17 @@ A Discord music bot that plays audio from YouTube (and SoundCloud, Spotify links
 | `/play song <url>` | Adds a single song from a url |
 | `/play playlist <url>` | Adds every song from a playlist url |
 | `/play search <searchterms>` | Searches YouTube and adds the first result |
+| `/yt <query>` | Adds a song from YouTube by url or search |
+| `/sc <query>` | Adds a song from SoundCloud by url or search |
+| `/sp <query>` | Adds a song from Spotify by url or search (needs Spotify credentials) |
 | `/info` | Shows the current song with a progress bar |
 | `/queue [page]` | Lists the queue, 10 songs per page |
 | `/pause` / `/resume` | Pauses or resumes playback |
 | `/skip` | Skips the current song |
 | `/skipto <tracknumber>` | Jumps to a position in the queue |
 | `/shuffle` | Shuffles the queue |
-| `/quit` | Clears the queue and leaves the voice channel |
+| `/quit` / `/exit` | Clears the queue and leaves the voice channel |
+| `/ping` | Shows the bot's latency |
 
 Commands that control playback only work when you are in the same voice channel as the bot. The bot leaves on its own one minute after the queue ends or the channel empties.
 
@@ -28,7 +32,7 @@ Requires Node.js 20 or newer.
    ```sh
    npm install
    ```
-3. Copy `.env.example` to `.env` and fill in `TOKEN` and `CLIENT_ID`. Set `GUILD_ID` to register commands on a single server instantly; leave it empty to register them globally.
+3. Copy `.env.example` to `.env` and fill in `TOKEN` and `CLIENT_ID`. Set `GUILD_ID` to register commands on a single server instantly; leave it empty to register them globally. To enable `/sp`, create an app in the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard) and set `SPOTIFY_CLIENT_ID` and `SPOTIFY_CLIENT_SECRET`.
 4. Register the slash commands (again whenever a command's options change):
    ```sh
    npm run deploy
