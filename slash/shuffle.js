@@ -1,13 +1,15 @@
-const { SlashCommandBuilder } = require("@discordjs/builders")
+const { SlashCommandBuilder } = require("discord.js")
+const { getControllableQueue } = require("../utils/queue")
 
 module.exports = {
 	data: new SlashCommandBuilder().setName("shuffle").setDescription("Shuffles the queue"),
 	run: async ({ client, interaction }) => {
-		const queue = client.player.getQueue(interaction.guildId)
+		const queue = await getControllableQueue(client, interaction)
+		if (!queue) return
 
-		if (!queue) return await interaction.editReply("There are no songs in the queue")
+		if (queue.tracks.size < 2) return interaction.editReply("There aren't enough songs in the queue to shuffle")
 
-		queue.shuffle()
-        await interaction.editReply(`The queue of ${queue.tracks.length} songs have been shuffled!`)
+		queue.tracks.shuffle()
+		await interaction.editReply(`The queue of ${queue.tracks.size} songs has been shuffled!`)
 	},
 }

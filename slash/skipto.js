@@ -1,19 +1,21 @@
-const { SlashCommandBuilder } = require("@discordjs/builders")
+const { SlashCommandBuilder } = require("discord.js")
+const { getControllableQueue } = require("../utils/queue")
 
 module.exports = {
-	data: new SlashCommandBuilder().setName("skipto").setDescription("Skips to a certain track #")
-    .addNumberOption((option) => 
-        option.setName("tracknumber").setDescription("The track to skip to").setMinValue(1).setRequired(true)),
+	data: new SlashCommandBuilder()
+		.setName("skipto")
+		.setDescription("Skips to a certain track #")
+		.addIntegerOption((option) =>
+			option.setName("tracknumber").setDescription("The track to skip to").setMinValue(1).setRequired(true)
+		),
 	run: async ({ client, interaction }) => {
-		const queue = client.player.getQueue(interaction.guildId)
+		const queue = await getControllableQueue(client, interaction)
+		if (!queue) return
 
-		if (!queue) return await interaction.editReply("There are no songs in the queue")
+		const trackNum = interaction.options.getInteger("tracknumber")
+		if (trackNum > queue.tracks.size) return interaction.editReply("Invalid track number")
 
-        const trackNum = interaction.options.getNumber("tracknumber")
-        if (trackNum > queue.tracks.length)
-            return await interaction.editReply("Invalid track number")
-		queue.skipTo(trackNum - 1)
-
-        await interaction.editReply(`Skipped ahead to track number ${trackNum}`)
+		queue.node.skipTo(trackNum - 1)
+		await interaction.editReply(`Skipped ahead to track number ${trackNum}`)
 	},
 }

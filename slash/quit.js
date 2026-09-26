@@ -1,13 +1,13 @@
-const { SlashCommandBuilder } = require("@discordjs/builders")
+const { SlashCommandBuilder } = require("discord.js")
+const { getControllableQueue } = require("../utils/queue")
 
 module.exports = {
 	data: new SlashCommandBuilder().setName("quit").setDescription("Stops the bot and clears the queue"),
 	run: async ({ client, interaction }) => {
-		const queue = client.player.getQueue(interaction.guildId)
+		const queue = await getControllableQueue(client, interaction)
+		if (!queue) return
 
-		if (!queue) return await interaction.editReply("There are no songs in the queue")
-
-		queue.destroy()
-        await interaction.editReply("Bye!")
+		queue.delete()
+		await interaction.editReply("Bye!")
 	},
 }

@@ -1,20 +1,21 @@
-const { SlashCommandBuilder } = require("@discordjs/builders")
-const { EmbedBuilder } = require("discord.js")
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js")
+const { getControllableQueue } = require("../utils/queue")
 
 module.exports = {
 	data: new SlashCommandBuilder().setName("skip").setDescription("Skips the current song"),
 	run: async ({ client, interaction }) => {
-		const queue = client.player.getQueue(interaction.guildId)
+		const queue = await getControllableQueue(client, interaction)
+		if (!queue) return
 
-		if (!queue) return await interaction.editReply("There are no songs in the queue")
+		const currentSong = queue.currentTrack
 
-        const currentSong = queue.current
-
-		queue.skip()
-        await interaction.editReply({
-            embeds: [
-                new EmbedBuilder().setDescription(`${currentSong.title} has been skipped!`).setThumbnail(currentSong.thumbnail)
-            ]
-        })
+		queue.node.skip()
+		await interaction.editReply({
+			embeds: [
+				new EmbedBuilder()
+					.setDescription(`${currentSong.title} has been skipped!`)
+					.setThumbnail(currentSong.thumbnail || null),
+			],
+		})
 	},
 }
