@@ -58,6 +58,13 @@ client.on("interactionCreate", async (interaction) => {
 	}
 })
 
+// Hosts that run the bot as a web service (e.g. Koyeb) health-check this port
+if (process.env.PORT) {
+	require("http")
+		.createServer((req, res) => res.end(client.isReady() ? "ok" : "starting"))
+		.listen(process.env.PORT, () => console.log(`Health check listening on port ${process.env.PORT}`))
+}
+
 async function main() {
 	await client.player.extractors.register(YoutubeExtractor, {})
 	await client.player.extractors.loadMulti(DefaultExtractors, {
